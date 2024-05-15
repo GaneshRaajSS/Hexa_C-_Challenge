@@ -3,6 +3,7 @@ using Order_Management_System.Repoistory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace Order_Management_System.Service
     internal class OrderProcessorService : IOrderProcessorService
     {
         readonly IOrderManagementRepository _repository;
+        readonly IOrderManagementRepository orderManagementRepository;
         public OrderProcessorService()
         {
             _repository = new OrderProcessor();
@@ -36,11 +38,11 @@ namespace Order_Management_System.Service
                 Console.WriteLine("Type:");
                 string type = Console.ReadLine();
 
-                Product product = new Product(0, productName, description, price, quantity, type); // Create a new Product object with the user input
+                Product product = new Product(0, productName, description, price, quantity, type); 
 
                 try
                 {
-                    _repository.CreateProduct(admin, product); // Pass the admin user and the product to the repository method
+                    _repository.CreateProduct(admin, product); 
                     Console.WriteLine("Product created successfully.");
                 }
                 catch (System.Exception ex)
@@ -53,8 +55,6 @@ namespace Order_Management_System.Service
                 Console.WriteLine("User is not an admin.");
             }
         }
-
-
         public void getAllProducts()
         {
             List<Product> products = _repository.GetAllProducts();
@@ -63,49 +63,6 @@ namespace Order_Management_System.Service
             {
                 Console.WriteLine($"ID: {product.ProductId}, Name: {product.ProductName}, Description: {product.Description}, Price: {product.Price}, Quantity: {product.Quantity}, Type: {product.Type}");
             }
-        }
-        public int UserExists()
-        {
-            Console.WriteLine("Enter UserName:");
-            string username = Console.ReadLine();
-            User user = new User(0, username, "", "");
-            int userId = _repository.UserExists(user);
-            if (userId > 0)
-            {
-                Console.WriteLine("User exists with UserID: " + userId);
-            }
-            else
-            {
-                Console.WriteLine("User does not exist.");
-            }
-            return userId;
-        }
-        public void CreateUser()
-        {
-            Console.WriteLine("Enter username:");
-            string username = Console.ReadLine();
-            Console.WriteLine("Enter password:");
-            string password = Console.ReadLine();
-            string role;
-            while (true)
-            {
-                Console.WriteLine("Select role (admin/user):");
-                string roleInput = Console.ReadLine().ToLower();
-
-                if (roleInput == "admin" || roleInput == "user")
-                {
-                    role = roleInput;
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Invalid role! Please enter 'admin' or 'user'.");
-                }
-            }
-            User newUser = new User(0, username, password, role);
-
-                int userId = _repository.CreateUser(newUser);
-                Console.WriteLine($"User created successfully with UserID: {userId}");
         }
         public void cancelOrder()
         {
@@ -128,7 +85,7 @@ namespace Order_Management_System.Service
         {
             Console.WriteLine("Enter username:");
             string username = Console.ReadLine();
-            User user = new User(0, username, "", ""); // Assuming other user details are not needed for order retrieval
+            User user = new User(0, username, "", ""); 
 
             List<Product> products = _repository.GetOrderByUser(user);
             if (products.Any())
@@ -144,7 +101,16 @@ namespace Order_Management_System.Service
                 Console.WriteLine($"No products ordered by user '{username}'.");
             }
         }
-
-
+        public int CreateUserWithInput()
+        {
+            Console.WriteLine("Enter username:");
+            string username = Console.ReadLine();
+            Console.WriteLine("Enter password:");
+            string password = Console.ReadLine();
+            User user = new User { UserName = username, Password = password };
+            return orderManagementRepository.CreateUser(user);
+            
+        }
+       
     }
 }

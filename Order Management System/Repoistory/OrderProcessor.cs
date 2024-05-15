@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Order_Management_System.Util;
+using System.Data;
+using Order_Management_System.Exceptions;
 
 namespace Order_Management_System.Repoistory
 {
@@ -29,44 +31,38 @@ namespace Order_Management_System.Repoistory
             }
             int productId = InsertProduct(product);
         }
-        public void CreateOrder(User user, List<Product> products)
+        public bool IsAdminUser(User user)
         {
-            int userId = UserExists(user);
-            if (userId < 0)
-            {
-                userId = CreateUser(user);
-            }
-            int orderId = CreateOrderForUser(userId);
-            foreach (Product product in products)
-            {
-                CreateOrderDetails(orderId, product);
-            }
+            cmd.Parameters.Clear();
+            cmd.CommandText = "select count(*) from [User] where username = @username and role = 'Admin'";
+            cmd.Parameters.AddWithValue("@username", user.UserName);
+            cmd.Connection.Open();
+            int adminCount = (int)cmd.ExecuteScalar();
+            cmd.Connection.Close();
+
+            return adminCount > 0;
         }
+
         public void CancelOrder(int orderId)
         {
             try
             {
-                
                 if (!OrderExists(orderId))
                 {
-                    Console.WriteLine("Order not found.");
-                    return;
+                    throw new UserOrOrderNotFoundException("User or Order ID not Found");
                 }
                 cmd.Connection.Open();
                 DeleteOrderDetails(orderId);
                 cmd.CommandText = "DELETE FROM [Order] WHERE orderId = @orderId";
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@orderId", orderId);
-                
                 cmd.ExecuteNonQuery();
-                
-
                 Console.WriteLine("Order cancelled successfully.");
                 cmd.Connection.Close();
             }
-            catch (System.Exception ex)
+            catch (UserOrOrderNotFoundException)
             {
-                Console.WriteLine($"Error cancelling order: {ex.Message}");
+                throw new UserOrOrderNotFoundException("User or Order ID not Found");
             }
         }
         public bool OrderExists(int orderId)
@@ -91,15 +87,15 @@ namespace Order_Management_System.Repoistory
         public int CreateUser(User user)
         {
             cmd.CommandText = "Insert into [User] values (@username, @password, @role); Select SCOPE_IDENTITY();";
+            cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@username", user.UserName);
             cmd.Parameters.AddWithValue("@password", user.Password);
-            cmd.Parameters.AddWithValue("@role", user.Role);
+            cmd.Parameters.AddWithValue("@role", "User");
             cmd.Connection.Open();
-            int createUserStatus = (int)cmd.ExecuteScalar();
+            int createUserStatus = Convert.ToInt32(cmd.ExecuteScalar());
             cmd.Connection.Close();
             return createUserStatus;
         }
-
         public List<Product> GetAllProducts()
         {
             List<Product> productList = new List<Product>();
@@ -138,65 +134,10 @@ namespace Order_Management_System.Repoistory
             }
             return GetOrdersByUserId(userId);
         }
-        public int UserExists(User user)
-        {
-            cmd.CommandText = "Select userId from [User] where username = @username and password = @password";
-            cmd.Parameters.AddWithValue("@username", user.UserName);
-            cmd.Parameters.AddWithValue("@password", user.Password);
-            cmd.Connection.Open();
-            int userExistsStatus = (int)cmd.ExecuteScalar();
-            cmd.Connection.Close();
-            return userExistsStatus;
-        }
-        public int CreateOrderForUser(int userId)
-        {
-            cmd.CommandText =  "Insert into [Order] values (@userId); select SCOPE_IDENTITY();";
-            cmd.Parameters.AddWithValue("@userId", userId);
-            int CreateOrderStatus = (int)cmd.ExecuteScalar();
-            return CreateOrderStatus;
-        }
-        public void CreateOrderDetails(int orderId, Product product)
-        {
-            cmd.CommandText=  "Insert into OrderDetails values (@orderId, @productId, @quantity);";
-            cmd.Parameters.AddWithValue("@orderId", orderId);
-            cmd.Parameters.AddWithValue("@productId", product.ProductId);
-            cmd.Parameters.AddWithValue("@quantity", product.Quantity);
-            cmd.ExecuteNonQuery();
-        }
-        public bool IsAdminUser(User user)
-        {
-            cmd.CommandText = "select count(*) from [User] where username = @username and role = 'Admin'";
-            cmd.Parameters.AddWithValue("@username", user.UserName);
-            cmd.Connection.Open();
-            int adminCount = (int)cmd.ExecuteScalar();
-            cmd.Connection.Close();
-
-            return adminCount > 0;
-        }
-
-
-        //public void DeleteOrder(int orderId)
-        //{
-        //    cmd.CommandText = "delete from [Order] where orderId = @orderId";
-        //    cmd.Parameters.AddWithValue("@orderId", orderId);
-        //    cmd.Connection.Open();
-        //    cmd.ExecuteNonQuery();
-        //    cmd.Connection.Close();
-        //}
-
-        //public bool IsAdminUser(User user)
-        //{
-        //    cmd.CommandText = "select count(*) from [User] where userId = @userId and role = 'Admin'";
-        //    cmd.Parameters.AddWithValue("@userId", user.UserId);
-        //    cmd.Connection.Open();
-        //    int adminCount = (int)cmd.ExecuteScalar();
-        //    cmd.Connection.Close();
-
-        //    return adminCount > 0;
-        //}
 
         public int InsertProduct(Product product)
         {
+            cmd.Parameters.Clear();
             cmd.CommandText = @"insert into Product values (@productName, @description, @price, @quantityInStock, @type); select SCOPE_IDENTITY();";
             cmd.Parameters.AddWithValue("@productName", product.ProductName);
             cmd.Parameters.AddWithValue("@description", product.Description);
@@ -210,6 +151,7 @@ namespace Order_Management_System.Repoistory
 
             return productId;
         }
+
 
         public int GetUserIdByUsername(string username)
         {
@@ -249,5 +191,84 @@ namespace Order_Management_System.Repoistory
 
             return orderProducts;
         }
+        public void CreateOrder(User user, List<Product> products)
+        {
+            try
+            {
+                int userId = GetUserIfExists(user);
+
+                if (userId != -1)
+                {
+                    using (SqlConnection connection = new SqlConnection(DbConnUtil.GetConnectionString()))
+                    {
+                        connection.Open();
+                        int orderId = CreateOrderForUser(connection, userId);
+                        foreach (Product product in products)
+                        {
+                            CreateOrderDetails(connection, orderId, product);
+                        }
+
+                        Console.WriteLine("Order created successfully.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("User does not exist. Cannot create order.");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine($"Error creating order: {ex.Message}");
+            }
+        }
+
+        private int GetUserIfExists(User user)
+        {
+            int userId = -1;
+
+            using (SqlConnection connection = new SqlConnection(DbConnUtil.GetConnectionString()))
+            {
+                connection.Open();
+                string query = "SELECT userId FROM [User] WHERE username = @username";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@username", user.UserName);
+                    object result = command.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        userId = Convert.ToInt32(result);
+                    }
+                }
+            }
+
+            return userId;
+        }
+
+        private int CreateOrderForUser(SqlConnection connection, int userId)
+        {
+            int orderId = -1;
+            string query = "INSERT INTO [Order] (userId) VALUES (@userId); SELECT SCOPE_IDENTITY();";
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@userId", userId);
+                orderId = Convert.ToInt32(command.ExecuteScalar());
+            }
+
+            return orderId;
+        }
+
+        private void CreateOrderDetails(SqlConnection connection, int orderId, Product product)
+        {
+            string query = "INSERT INTO OrderDetails (orderId, productId, quantity) VALUES (@orderId, @productId, @quantity);";
+            using (SqlCommand command = new SqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@orderId", orderId);
+                command.Parameters.AddWithValue("@productId", product.ProductId);
+                command.Parameters.AddWithValue("@quantity", product.Quantity);
+                command.ExecuteNonQuery();
+            }
+        }
+
+
     }
 }

@@ -9,11 +9,11 @@ namespace Order_Management_System.Service
 {
     internal interface IOrderProcessorService
     {
-        public int UserExists();
         public void cancelOrder();
         public void getOrderByUser();
         public void createProduct();
         public void getAllProducts();
-        public void CreateUser();
+        public int CreateUserWithInput();
+
     }
 }
