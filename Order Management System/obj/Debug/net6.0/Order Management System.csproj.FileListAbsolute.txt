@@ -1,0 +1,33 @@
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\Order Management System.exe
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\Order Management System.deps.json
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\Order Management System.runtimeconfig.json
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\Order Management System.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\Order Management System.pdb
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\Microsoft.Extensions.Configuration.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Json.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Physical.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\Microsoft.Extensions.FileSystemGlobbing.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\System.Data.SqlClient.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\System.Text.Json.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\obj\Debug\net6.0\Order Management System.csproj.AssemblyReference.cache
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\obj\Debug\net6.0\Order Management System.GeneratedMSBuildEditorConfig.editorconfig
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\obj\Debug\net6.0\Order Management System.AssemblyInfoInputs.cache
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\obj\Debug\net6.0\Order Management System.AssemblyInfo.cs
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\obj\Debug\net6.0\Order Management System.csproj.CoreCompileInputs.cache
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\obj\Debug\net6.0\Order Ma.D318B10C.Up2Date
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\obj\Debug\net6.0\Order Management System.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\obj\Debug\net6.0\refint\Order Management System.dll
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\obj\Debug\net6.0\Order Management System.pdb
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\obj\Debug\net6.0\Order Management System.genruntimeconfig.cache
+D:\Ganesh Raaj\HEXAWARE segue\Technical Foundation Training\C#\Coding Challenge\Order Management System\obj\Debug\net6.0\ref\Order Management System.dll
